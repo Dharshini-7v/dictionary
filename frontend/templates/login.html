@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Dictionary Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="theme-toggle">
+                <button id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+            <h1>🔐 Sign In</h1>
+            <p class="subtitle">Access your dictionary search</p>
+        </div>
+
+        <form method="post" class="auth-form">
+            <div class="input-wrapper">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-wrapper">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="search-btn">Sign In</button>
+        </form>
+
+        <p class="auth-links">Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="result not-found animate">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeIcon').textContent = '☀️';
+            }
+        };
+    </script>
+</body>
+</html>

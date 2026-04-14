@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="theme-toggle">
+                <button id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+            <h1>📚 Dictionary Search</h1>
+            <p class="subtitle">Powered by Binary Search Algorithm</p>
+            <p class="user-info">Welcome, <strong>{{ current_user.id }}</strong>! <a href="{{ url_for('logout') }}">Logout</a></p>
+            <p class="word-count">📖 Dictionary loaded with <strong>{{ word_count }}</strong> words</p>
+        </div>
+
+        <div class="search-section">
+            <form action="{{ url_for('search') }}" method="post" class="search-form" id="searchForm">
+                <div class="input-wrapper">
+                    <input type="text" id="word" name="word" placeholder="Enter a word to search..." required autocomplete="off">
+                    <div id="suggestions" class="suggestions"></div>
+                </div>
+                <button type="submit" class="search-btn">🔍 Search</button>
+            </form>
+            
+            <form action="{{ url_for('random_word') }}" method="post">
+                <button type="submit" class="random-btn">🎲 Random Word</button>
+            </form>
+        </div>
+
+        {% if result %}
+        <div class="result animate">
+            <p>{{ result }}</p>
+        </div>
+        {% endif %}
+
+        {% if history %}
+        <div class="history-section">
+            <div class="history-header">
+                <h3>🔄 Recent Searches</h3>
+                <form action="{{ url_for('clear_history') }}" method="post" class="clear-form">
+                    <button type="submit" class="clear-btn">Clear</button>
+                </form>
+            </div>
+            <div class="history-list">
+                {% for item in history %}
+                <div class="history-item">
+                    <span class="history-word">{{ item.word }}</span>
+                    <span class="history-result">{{ item.result }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('history') }}" class="view-all">View All History →</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Dark/Light Mode Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeIcon').textContent = '☀️';
+            }
+        };
+
+        // Autocomplete
+        const input = document.getElementById('word');
+        const suggestions = document.getElementById('suggestions');
+
+        input.addEventListener('input', async function() {
+            const query = this.value.toLowerCase();
+            if (query.length < 2) {
+                suggestions.style.display = 'none';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/autocomplete?q=${encodeURIComponent(query)}`);
+                const words = await response.json();
+                
+                if (words.length > 0) {
+                    suggestions.innerHTML = words.map(w => 
+                        `<div class="suggestion-item" onclick="selectWord('${w}')">${w}</div>`
+                    ).join('');
+                    suggestions.style.display = 'block';
+                } else {
+                    suggestions.style.display = 'none';
+                }
+            } catch (e) {
+                console.log('Autocomplete error');
+            }
+        });
+
+        function selectWord(word) {
+            input.value = word;
+            suggestions.style.display = 'none';
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+                suggestions.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
