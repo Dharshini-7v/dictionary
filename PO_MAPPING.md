@@ -88,6 +88,61 @@
 
 ---
 
+### PO8 – Ethics
+**Statement:** Apply ethical principles and commit to professional ethics and responsibilities and norms of engineering practice.
+
+**Project Mapping:**
+- Implementation of **secure password hashing** (Werkzeug) to protect user data
+- Respecting **intellectual property** by documenting all used libraries and resources
+- Ensuring **data privacy** by using session-based authentication
+- Developing a **transparent algorithm** with clear results for the user
+
+---
+
+### PO9 – Individual and Team Work
+**Statement:** Function effectively as an individual, and as a member or leader in diverse teams and in multi-disciplinary settings.
+
+**Project Mapping:**
+- Handled both **frontend and backend development** independently
+- Integrated **C-based logic into a Python environment**, demonstrating multi-disciplinary coordination
+- Followed a **structured development workflow** using Git for task management
+- Organized files into a **clean directory structure** for better team readability
+
+---
+
+### PO10 – Communication
+**Statement:** Communicate effectively on complex engineering activities with the engineering community and with society at large.
+
+**Project Mapping:**
+- Created a **comprehensive README.md** for project documentation
+- Added **user-friendly feedback messages** (e.g., "Word found at position X")
+- Documented **API endpoints and algorithm complexity** clearly
+- Used **semantic HTML and clean CSS** for accessible communication with users
+
+---
+
+### PO11 – Project Management and Finance
+**Statement:** Demonstrate knowledge and understanding of engineering and management principles and apply these to one’s own work, as a member and leader in a team, to manage projects and in multidisciplinary environments.
+
+**Project Mapping:**
+- Managed project milestones using a **Todo list and structured tasks**
+- Separated concerns into **Frontend/Backend folders** for scalable project management
+- Efficiently utilized **open-source tools** (Flask, Git) to minimize project costs
+- Optimized **resource usage** by choosing Binary Search over Linear Search
+
+---
+
+### PO12 – Lifelong Learning
+**Statement:** Recognize the need for, and have the preparation and ability to engage in independent and life-long learning in the broadest context of technological change.
+
+**Project Mapping:**
+- Explored and implemented **C-Python integration** (subprocess), a new technological technique
+- Implemented **modern UX features** like Dark Mode and Autocomplete
+- Adapting to **CGI vs Web Framework** concepts during the development process
+- Continuous improvement of the codebase based on **new requirements and feedback**
+
+---
+
 ## Technical Specifications
 
 | Component | Technology | Purpose |
